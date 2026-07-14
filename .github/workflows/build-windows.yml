@@ -34,7 +34,6 @@ jobs:
       with:
         vcpkgDirectory: ${{ runner.workspace }}/vcpkg
         vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-        vcpkgTriplet: x64-windows-static
 
     - name: Install vcpkg dependencies
       shell: pwsh
@@ -59,7 +58,7 @@ jobs:
     - name: Build
       shell: bash
       run: |
-        cargo build --release --target=x86_64-pc-windows-msvc
+        cargo build --release --features inline --target=x86_64-pc-windows-msvc
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
