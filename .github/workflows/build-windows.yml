@@ -10,6 +10,7 @@ on:
 env:
   VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
   VCPKG_COMMIT_ID: "120deac3062162151622ca4860575a33844ba10b"
+  VCPKG_DEFAULT_TRIPLET: "x64-windows-static"
 
 jobs:
   build:
@@ -33,16 +34,12 @@ jobs:
       with:
         vcpkgDirectory: ${{ runner.workspace }}/vcpkg
         vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-
-    - name: Copy custom vcpkg ports
-      shell: pwsh
-      run: |
-        Copy-Item -Path "res/vcpkg/*" -Destination "$env:VCPKG_ROOT/ports/" -Recurse -Force
+        vcpkgTriplet: x64-windows-static
 
     - name: Install vcpkg dependencies
       shell: pwsh
       run: |
-        & "$env:VCPKG_ROOT/vcpkg" install --x-install-root="$env:VCPKG_ROOT/installed"
+        & "$env:VCPKG_ROOT/vcpkg" install --triplet x64-windows-static --x-install-root="$env:VCPKG_ROOT/installed"
 
     - name: Install Rust toolchain
       uses: dtolnay/rust-toolchain@stable
