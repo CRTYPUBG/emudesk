@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+case $1 in
+    remove|upgrade)
+		INITSYS=$(ls -al /proc/1/exe | awk -F' ' '{print $NF}' | awk -F'/' '{print $NF}')
+		rm -f /usr/bin/emudesk
+
+		if [ "systemd" == "${INITSYS}" ]; then
+
+			systemctl stop emudesk || true
+			systemctl disable emudesk || true
+			rm /etc/systemd/system/emudesk.service /usr/lib/systemd/system/emudesk.service || true
+
+			# workaround temp dev build between 1.1.9 and 1.2.0
+			serverUser=$(ps -ef | grep -E 'emudesk +--server' | grep -v 'sudo ' | awk '{print $1}' | head -1)
+			if [ "$serverUser" != "" ] && [ "$serverUser" != "root" ]
+			then
+				systemctl --machine=${serverUser}@.host --user stop emudesk >/dev/null 2>&1 || true
+			fi
+			rm /usr/lib/systemd/user/emudesk.service >/dev/null 2>&1 || true
+		fi
+        ;;
+esac
+
+exit 0

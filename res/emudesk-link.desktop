@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=emudesk
+NoDisplay=true
+MimeType=x-scheme-handler/emudesk;
+TryExec=emudesk
+Exec=emudesk %u
+Icon=emudesk
+Terminal=false
+Type=Application
+StartupNotify=false
+StartupWMClass=emudesk

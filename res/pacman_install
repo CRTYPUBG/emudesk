@@ -1,0 +1,47 @@
+# arg 1:  the new package version
+#pre_install() {
+#}
+
+# arg 1:  the new package version
+post_install() {
+	# do something here
+	cp /usr/share/emudesk/files/emudesk.service /etc/systemd/system/emudesk.service
+	cp /usr/share/emudesk/files/emudesk.desktop /usr/share/applications/
+	cp /usr/share/emudesk/files/emudesk-link.desktop /usr/share/applications/
+	systemctl daemon-reload
+	systemctl enable emudesk
+	systemctl start emudesk
+	update-desktop-database
+}
+
+# arg 1:  the new package version
+# arg 2:  the old package version
+pre_upgrade() {
+    systemctl stop emudesk || true
+}
+
+# arg 1:  the new package version
+# arg 2:  the old package version
+post_upgrade() {
+	cp /usr/share/emudesk/files/emudesk.service /etc/systemd/system/emudesk.service
+	cp /usr/share/emudesk/files/emudesk.desktop /usr/share/applications/
+	cp /usr/share/emudesk/files/emudesk-link.desktop /usr/share/applications/
+	systemctl daemon-reload
+	systemctl enable emudesk
+	systemctl start emudesk
+	update-desktop-database
+}
+
+# arg 1:  the old package version
+pre_remove() {
+	systemctl stop emudesk || true
+	systemctl disable emudesk || true
+	rm /etc/systemd/system/emudesk.service || true
+}
+
+# arg 1:  the old package version
+post_remove() {
+	rm /usr/share/applications/emudesk.desktop || true
+	rm /usr/share/applications/emudesk-link.desktop || true
+	update-desktop-database
+}
