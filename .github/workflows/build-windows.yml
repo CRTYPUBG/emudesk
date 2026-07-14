@@ -60,9 +60,17 @@ jobs:
       run: |
         cargo build --release --target=x86_64-pc-windows-msvc
 
+    - name: Download sciter.dll
+      shell: bash
+      run: |
+        curl -L -o target/x86_64-pc-windows-msvc/release/sciter.dll \
+          https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.win/x64/sciter.dll
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: emudesk-windows-x64
-        path: target/x86_64-pc-windows-msvc/release/emudesk.exe
+        path: |
+          target/x86_64-pc-windows-msvc/release/emudesk.exe
+          target/x86_64-pc-windows-msvc/release/sciter.dll
         if-no-files-found: error
