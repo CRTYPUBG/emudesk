@@ -1,0 +1,24 @@
+# Rust build çıktıları
+/target
+
+# Windows çalıştırılabilir dosyaları (mstsc.exe hariç — o sistemin, ignore edilmez)
+*.exe
+
+# Ortam değişkenleri (gerçek)
+*.env
+
+# Koordinasyon sunucusu kalıcı veri dizini
+emudesk-server-data/
+
+# Profil dosyaları (yerel kullanıcı verisi)
+profiles.json
+emudesk_profiles.json
+
+# macOS
+.DS_Store
+
+# IDE dizinleri
+.idea/
+.vscode/
+*.swp
+*.swo

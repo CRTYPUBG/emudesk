@@ -1,0 +1,30 @@
+[package]
+name = "emudesk-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "EmuDesk HTTP + WebSocket coordination (rendezvous) server"
+
+[lib]
+name = "emudesk_server"
+path = "src/lib.rs"
+
+[[bin]]
+name = "emudesk-server"
+path = "src/main.rs"
+
+[dependencies]
+emudesk-core = { path = "../emudesk-core" }
+axum = { version = "0.7", features = ["ws"] }
+tokio.workspace = true
+tokio-tungstenite = "0.24"
+futures-util = "0.3"
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tower = { version = "0.5", features = ["util", "limit"] }
+
+[dev-dependencies]
+tempfile.workspace = true

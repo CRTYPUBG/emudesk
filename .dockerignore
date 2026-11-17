@@ -1,0 +1,22 @@
+# Rust build outputs
+target/
+
+# Data / runtime artifacts
+*.emudesk-server-data/
+emudesk-server-data/
+
+# Docs and orchestration files not needed in the Docker build context
+docs/
+README.md
+Procfile
+railway.json
+docker-compose.yml
+
+# Source-control and editor
+.git/
+.gitignore
+*.md
+
+# Existing artifacts in the repo root
+*.exe
+RDP_REHBER.md

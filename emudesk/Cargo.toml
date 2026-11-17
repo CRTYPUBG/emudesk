@@ -1,0 +1,30 @@
+[package]
+name = "emudesk"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "EmuDesk - Windows Remote Desktop (mstsc.exe) launcher GUI"
+
+[[bin]]
+name = "emudesk"
+path = "src/main.rs"
+
+[dependencies]
+emudesk-core = { path = "../emudesk-core" }
+eframe = { version = "0.29", default-features = false, features = ["default_fonts", "glow"] }
+egui = "0.29"
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+rand = { workspace = true }
+ureq = "2"
+sha2 = { workspace = true }
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", features = ["Win32_Foundation", "Win32_UI_Shell"] }
+dirs = "5.0"
+
+[dev-dependencies]
+tempfile = { workspace = true }
