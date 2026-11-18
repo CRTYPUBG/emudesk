@@ -19,15 +19,17 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
+      # checkout@v7 — node24 (v4 node20 idi, uyarı buradan geliyordu).
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
+      # dtolnay/rust-toolchain composite action; Node'a bağımlı değil, değişmedi.
       - name: Install Rust toolchain (stable)
         uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
 
-      # rust-cache@v2 — güncel upstream sürümü.
+      # rust-cache v2.9.0'dan beri node24; floating @v2 etiketi yeterli.
       - name: Cache Cargo
         uses: Swatinem/rust-cache@v2
 
