@@ -19,13 +19,15 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
+      # checkout@v7 — node24.
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
+      # dtolnay/rust-toolchain composite action; Node'a bağımlı değil, değişmedi.
       - name: Install Rust toolchain (stable)
         uses: dtolnay/rust-toolchain@stable
 
-      # rust-cache@v2 — güncel upstream sürümü.
+      # rust-cache v2.9.0'dan beri node24; floating @v2 etiketi yeterli.
       - name: Cache Cargo
         uses: Swatinem/rust-cache@v2
 
@@ -60,8 +62,9 @@ jobs:
         shell: bash
         run: ./scripts/package.sh "${{ steps.version.outputs.version }}"
 
+      # upload-artifact@v7 ile download-artifact@v8 birlikte çalışır (ikisi de node24).
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-assets-${{ matrix.os }}
           path: |
@@ -79,15 +82,15 @@ jobs:
 
     steps:
       - name: Download all assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: release-assets-*
           merge-multiple: true
           path: assets
 
-      # action-gh-release@v2 — güncel upstream sürümü.
+      # action-gh-release@v3 — node24.
       - name: Publish GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           draft: true
           generate_release_notes: true
